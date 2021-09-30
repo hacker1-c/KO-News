@@ -1,5 +1,5 @@
 # Library
-from tkinter import ttk, CENTER
+from tkinter import ttk, CENTER, messagebox
 import tkinter as tk
 import firebase_admin
 from firebase_admin import credentials
@@ -17,7 +17,10 @@ def new_news():
     def add():
         title = title_input.get()
         news = news_input.get()
-        db.collection('News').add({'Title': title, 'News': news})
+        if title == '' or news == '':
+            messagebox.showerror('Error', "Can't Upload")
+        else:
+            db.collection('News').add({'Title': title, 'News': news})
 
     win1 = tk.Toplevel()
     win1.title('Create News')
