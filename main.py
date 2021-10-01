@@ -64,7 +64,7 @@ def search():
                                                                    doc.to_dict()['News']))
             my_tree.pack()
     else:
-        docs = db.collection('News').where('Title','==', search_var).get()
+        docs = db.collection('News').get()
         my_tree = ttk.Treeview(win2)
         # Columns
         my_tree['columns'] = ("Title", "News")
@@ -76,10 +76,11 @@ def search():
         my_tree.heading('News', text='News', anchor=CENTER)
         ii = 0
         for doc in docs:
-            ii += 1
-            my_tree.insert(parent='', index='end', iid=ii, values=(doc.to_dict()['Title'],
-                                                                   doc.to_dict()['News']))
-            my_tree.pack()
+            if search_var in doc.to_dict()['News']:
+                ii += 1
+                my_tree.insert(parent='', index='end', iid=ii, values=(doc.to_dict()['Title'],
+                                                                       doc.to_dict()['News']))
+                my_tree.pack()
 
     win2.mainloop()
 
